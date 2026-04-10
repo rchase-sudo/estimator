@@ -5,35 +5,92 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Civil Engineering Proposal Generator</title>
 <style>
-  body { margin:0; font-family: Inter, sans-serif; background:#0a0a0a; color:white; padding:40px 20px; }
+  body { 
+    margin:0; 
+    font-family: Inter, system-ui, sans-serif; 
+    background:#0a0a0a; 
+    color:white; 
+    padding:40px 20px; 
+  }
   .container { max-width:1200px; margin:0 auto; }
   h1 { font-size:32px; font-weight:700; }
   .pmBadge { background:#222; padding:8px 18px; border-radius:9999px; font-size:15px; margin-left:20px; }
   .mainGrid { display:grid; grid-template-columns:380px 1fr; gap:30px; }
   .card { background:#151515; border-radius:16px; padding:32px; }
-  .formGroup { margin-bottom:20px; }
+  .formGroup { margin-bottom:24px; }
   label { display:block; margin-bottom:8px; font-size:14px; color:#aaa; font-weight:500; }
-  input, textarea { width:100%; padding:14px 16px; background:#222; border:none; border-radius:10px; color:white; font-size:16px; }
-  textarea { resize: vertical; }
-  button { cursor:pointer; border:none; border-radius:12px; font-weight:700; font-size:16px; }
-  #generateButton { width:100%; padding:16px; background:#4ade80; color:#0a0a0a; margin-top:10px; }
+  input, textarea { 
+    width:100%; 
+    padding:14px 16px; 
+    background:#222; 
+    border:none; 
+    border-radius:10px; 
+    color:white; 
+    font-size:16px; 
+  }
+  textarea { 
+    resize: vertical; 
+    min-height: 420px; 
+    line-height: 1.6;
+  }
+  button { 
+    cursor:pointer; 
+    border:none; 
+    border-radius:12px; 
+    font-weight:700; 
+    font-size:16px; 
+  }
+  #generateButton { 
+    width:100%; 
+    padding:16px; 
+    background:#4ade80; 
+    color:#0a0a0a; 
+    margin-top:20px; 
+    font-size:17px;
+  }
   #proposalCard { min-height:600px; display:flex; flex-direction:column; }
-  #proposalHeader { display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; border-bottom:1px solid #222; padding-bottom:16px; }
-  #copyButton { padding:10px 20px; background:#333; color:white; border-radius:9999px; font-size:14px; }
-  #proposalContent { flex:1; overflow-y:auto; line-height:1.75; padding-right:8px; }
+  #proposalHeader { 
+    display:flex; 
+    justify-content:space-between; 
+    align-items:center; 
+    margin-bottom:24px; 
+    border-bottom:1px solid #222; 
+    padding-bottom:16px; 
+  }
+  #copyButton { 
+    padding:10px 20px; 
+    background:#333; 
+    color:white; 
+    border-radius:9999px; 
+    font-size:14px; 
+  }
+  #proposalContent { 
+    flex:1; 
+    overflow-y:auto; 
+    line-height:1.75; 
+    padding-right:8px; 
+  }
   .sectionTitle { font-size:24px; font-weight:700; margin:32px 0 16px 0; color:#4ade80; }
   .subTitle { font-size:20px; font-weight:600; margin:24px 0 12px 0; color:#ddd; }
   .paragraph { margin-bottom:14px; white-space:pre-wrap; }
   .listItem { margin-bottom:10px; padding-left:4px; }
-  .emptyState { height:100%; display:flex; align-items:center; justify-content:center; text-align:center; color:#666; font-style:italic; }
+  .emptyState { 
+    height:100%; 
+    display:flex; 
+    align-items:center; 
+    justify-content:center; 
+    text-align:center; 
+    color:#666; 
+    font-style:italic; 
+  }
   .error { color:#ff6b6b; margin-top:12px; text-align:center; }
 </style>
 </head>
 <body>
 <div class="container">
   <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:40px;">
-    <h1>AI Civil Engineering Proposal Generator</h1>
-    <div class="pmBadge">Powered by Apollo • Proposal Mode</div>
+    <h1>AI Materials & Quantities Estimator</h1>
+    <div class="pmBadge">Powered by Apollo • Estimator Mode</div>
   </div>
 
   <div class="mainGrid">
@@ -41,226 +98,27 @@
     <div class="card">
       <h2 style="font-size:22px; margin-bottom:24px; font-weight:600;">Project Information</h2>
 
-      <!-- GENERAL INFO -->
-      <div class="formGroup">
-        <label>Project Name</label>
-        <input id="projectName" placeholder="e.g. Oak Street Development">
-      </div>
-      
-      <div class="formGroup">
-        <label>Project Address</label>
-        <input id="projectAddress" placeholder="e.g. 123 Main St, City, State">
-      </div>
-      
-      <div class="formGroup">
-        <label>Date</label>
-        <input id="date" placeholder="e.g. April 8, 2026">
-      </div>
-      
-      <div class="formGroup">
-        <label>Client Name</label>
-        <input id="clientName" placeholder="e.g. John Smith">
-      </div>
-      
-      <div class="formGroup">
-        <label>Client Company</label>
-        <input id="clientCompany" placeholder="e.g. ABC Development LLC">
-      </div>
-      
-      <div class="formGroup">
-        <label>Client Address</label>
-        <input id="clientAddress" placeholder="e.g. 456 Business Rd, City, State">
-      </div>
-      
-      <div class="formGroup">
-        <label>Client Email</label>
-        <input id="clientEmail" placeholder="e.g. client@email.com">
-      </div>
-      
-      <!-- PROJECT DETAILS -->
-      <div class="formGroup">
-        <label>Project Type</label>
-        <input id="projectType" placeholder="e.g. Commercial, Residential, Mixed-Use" value="Commercial">
-      </div>
-      
-      <div class="formGroup">
-        <label>Project Description</label>
-        <input id="projectDescription" placeholder="Describe what is being built">
-      </div>
-      
-      <div class="formGroup">
-        <label>Site Size</label>
-        <input id="siteSize" placeholder="e.g. 2.5 acres">
-      </div>
-      
-      <div class="formGroup">
-        <label>Number of Lots / Units</label>
-        <input id="numberLots" placeholder="e.g. 25 lots">
-      </div>
-      
-      <div class="formGroup">
-        <label>Existing Conditions Summary</label>
-        <input id="ecSummary" placeholder="Brief description of existing site conditions">
-      </div>
-      
-      <div class="formGroup">
-        <label>Proposed Improvements</label>
-        <input id="proposedImprovements" placeholder="Describe proposed improvements">
-      </div>
-      
-      <!-- REGULATORY -->
-      <div class="formGroup">
-        <label>Zoning District</label>
-        <input id="zone" placeholder="e.g. B-2 Commercial">
-      </div>
-      
-      <div class="formGroup">
-        <label>Required Permits</label>
-        <input id="reqPermits" placeholder="List required permits">
-      </div>
-      
-      <div class="formGroup">
-        <label>Known Constraints</label>
-        <input id="constraints" placeholder="General constraints">
-      </div>
-      
-      <div class="formGroup">
-        <label>Wetlands</label>
-        <input id="wetlands" placeholder="Describe wetlands on site">
-      </div>
-      
-      <div class="formGroup">
-        <label>Floodplain</label>
-        <input id="floodplain" placeholder="Flood zone info">
-      </div>
-      
-      <div class="formGroup">
-        <label>Buffers</label>
-        <input id="buffers" placeholder="Setbacks / buffer zones">
-      </div>
-      
-      <div class="formGroup">
-        <label>Other Regulatory Constraints</label>
-        <input id="otherReg" placeholder="Any additional constraints">
-      </div>
-      
-      <div class="formGroup">
-        <label>Discussions with Town Officials</label>
-        <input id="townOfficials" placeholder="Summary of discussions (if any)">
-      </div>
-      
-      <!-- SCOPE -->
-      <div class="formGroup">
-        <label>Include Survey?</label>
-        <input id="incSurv" placeholder="Yes / No">
-      </div>
-      
-      <div class="formGroup">
-        <label>Include Master Planning?</label>
-        <input id="incMast" placeholder="Yes / No">
-      </div>
-      
-      <div class="formGroup">
-        <label>Include Site Design?</label>
-        <input id="incSite" placeholder="Yes / No">
-      </div>
-      
-      <div class="formGroup">
-        <label>Include Septic Design?</label>
-        <input id="incSeptic" placeholder="Yes / No">
-      </div>
-      
-      <div class="formGroup">
-        <label>Include Stormwater Design?</label>
-        <input id="incStorm" placeholder="Yes / No">
-      </div>
-      
-      <div class="formGroup">
-        <label>Include Permitting?</label>
-        <input id="incPermit" placeholder="Yes / No">
-      </div>
-      
-      <!-- FEES -->
-      <div class="formGroup">
-        <label>Phase A Fee</label>
-        <input id="aFee" placeholder="e.g. $20,000">
-      </div>
-      
-      <div class="formGroup">
-        <label>Phase B Fee</label>
-        <input id="bFee" placeholder="e.g. $15,000">
-      </div>
-      
-      <div class="formGroup">
-        <label>Phase C Fee</label>
-        <input id="cFee" placeholder="e.g. $12,000">
-      </div>
-      
-      <div class="formGroup">
-        <label>Phase D Fee</label>
-        <input id="dFee" placeholder="e.g. $10,000">
-      </div>
-      
-      <div class="formGroup">
-        <label>Retainer Amount</label>
-        <input id="retAmount" placeholder="e.g. $8,000">
-      </div>
-      
-      <!-- SCHEDULE -->
-      <div class="formGroup">
-        <label>Estimated Start Timing</label>
-        <input id="estStart" placeholder="e.g. Upon authorization">
-      </div>
-      
-      <div class="formGroup">
-        <label>Existing Conditions Duration</label>
-        <input id="ecDur" placeholder="e.g. 6-8 weeks">
-      </div>
-      
-      <div class="formGroup">
-        <label>Master Plan Duration</label>
-        <input id="masDur" placeholder="e.g. 4 weeks">
-      </div>
-      
-      <div class="formGroup">
-        <label>Design Duration</label>
-        <input id="desDur" placeholder="e.g. 6 weeks">
-      </div>
-      
-      <!-- EXCLUSIONS -->
-      <div class="formGroup">
-        <label>Custom Exclusions</label>
-        <input id="otherExclusions" placeholder="List exclusions">
-      </div>
-      
-      <!-- SIGNATURE -->
-      <div class="formGroup">
-        <label>Your Name</label>
-        <input id="yourName" placeholder="e.g. John Doe">
-      </div>
-      
-      <div class="formGroup">
-        <label>Your Title</label>
-        <input id="yourTitle" placeholder="e.g. Project Engineer">
-      </div>
-      
-      <div class="formGroup">
-        <label>Company Name</label>
-        <input id="compName" placeholder="e.g. Your Engineering Firm">
+        <div class="formGroup">
+        <label><strong>Materials & Quantities</strong></label>
+        <textarea id="materialsQuantities" placeholder="Provide detailed information about the project including:
+• Materials required
+• Estimated quantities"></textarea>
       </div>
 
-      <button id="generateButton">Generate Proposal</button>
+      
+
+      <button id="generateButton">Generate Report</button>
       <p class="error" id="errorMsg" style="display:none;"></p>
     </div>
 
     <!-- Proposal Output -->
     <div class="card" id="proposalCard">
       <div id="proposalHeader">
-        <h2 style="font-size:22px; font-weight:600;">Generated Proposal</h2>
+        <h2 style="font-size:22px; font-weight:600;">Generated Report</h2>
         <button id="copyButton" style="display:none;">📋 Copy to Clipboard</button>
       </div>
       <div id="proposalContent">
-        <div class="emptyState">Fill out the project details on the left and click "Generate Proposal" to create a professional civil engineering proposal.</div>
+        <div class="emptyState">Fill out the project details on the left and click "Generate Report" to create a professional civil engineering report.</div>
       </div>
     </div>
   </div>
@@ -299,11 +157,6 @@ function renderProposal(text) {
       h3.textContent = trimmed.replace("## ", "");
       h3.className = "subTitle";
       container.appendChild(h3);
-    } else if (trimmed.startsWith("### ")) {
-      const h4 = document.createElement("h4");
-      h4.textContent = trimmed.replace("### ", "");
-      h4.className = "subTitle";
-      container.appendChild(h4);
     } else if (trimmed.startsWith("- ") || trimmed.startsWith("* ")) {
       const div = document.createElement("div");
       div.className = "listItem";
@@ -323,200 +176,87 @@ function renderProposal(text) {
 }
 
 document.getElementById("generateButton").addEventListener("click", async () => {
-  // GENERAL INFO
-  const projectName = document.getElementById("projectName").value;
-  const projectAddress = document.getElementById("projectAddress").value;
-  const date = document.getElementById("date").value;
-  const clientName = document.getElementById("clientName").value;
-  const clientCompany = document.getElementById("clientCompany").value;
-  const clientAddress = document.getElementById("clientAddress").value;
-  const clientEmail = document.getElementById("clientEmail").value;
-  
-  // PROJECT DETAILS
-  const projectType = document.getElementById("projectType").value;
-  const projectDescription = document.getElementById("projectDescription").value;
-  const siteSize = document.getElementById("siteSize").value;
-  const numberLots = document.getElementById("numberLots").value;
-  const ecSummary = document.getElementById("ecSummary").value;
-  const proposedImprovements = document.getElementById("proposedImprovements").value;
-  
-  // REGULATORY / SITE CONDITIONS
-  const zone = document.getElementById("zone").value;
-  const reqPermits = document.getElementById("reqPermits").value;
-  const constraints = document.getElementById("constraints").value;
-  const wetlands = document.getElementById("wetlands").value;
-  const floodplain = document.getElementById("floodplain").value;
-  const buffers = document.getElementById("buffers").value;
-  const otherReg = document.getElementById("otherReg").value;
-  const townOfficials = document.getElementById("townOfficials").value;
-  
-  // SCOPE CUSTOMIZATION
-  const incSurv = document.getElementById("incSurv").value;
-  const incMast = document.getElementById("incMast").value;
-  const incSite = document.getElementById("incSite").value;
-  const incSeptic = document.getElementById("incSeptic").value;
-  const incStorm = document.getElementById("incStorm").value;
-  const incPermit = document.getElementById("incPermit").value;
-  
-  // FEES
-  const aFee = document.getElementById("aFee").value;
-  const bFee = document.getElementById("bFee").value;
-  const cFee = document.getElementById("cFee").value;
-  const dFee = document.getElementById("dFee").value;
-  const retAmount = document.getElementById("retAmount").value;
-  
-  // SCHEDULE
-  const estStart = document.getElementById("estStart").value;
-  const ecDur = document.getElementById("ecDur").value;
-  const masDur = document.getElementById("masDur").value;
-  const desDur = document.getElementById("desDur").value;
-  
-  // EXCLUSIONS
-  const otherExclusions = document.getElementById("otherExclusions").value;
-  
-  // SIGNATURE INFO
-  const yourName = document.getElementById("yourName").value;
-  const yourTitle = document.getElementById("yourTitle").value;
-  const compName = document.getElementById("compName").value;
-  const notes = document.getElementById("notes").value;
+  const projectName = document.getElementById("materialsQuants").value.trim();
 
-  if (!type.trim()) {
+  if (!projectName || !clientName) {
     document.getElementById("errorMsg").style.display = "block";
-    document.getElementById("errorMsg").textContent = "Please enter at least the Project Type";
+    document.getElementById("errorMsg").textContent = "Project Name and Client Name are required.";
     return;
   }
 
   document.getElementById("errorMsg").style.display = "none";
   const contentDiv = document.getElementById("proposalContent");
-  contentDiv.innerHTML = "Generating proposal...";
+  contentDiv.innerHTML = "Generating Report...";
 
   const systemPrompt = `
-  You are a professional civil engineering consultant preparing a formal proposal.
+You are a Materials Takeoff and Cost Reporting Engine. Your sole function is to convert raw input data (materials, descriptions, quantities, and unit prices) into a fully structured, professional, copy-paste-ready cost report.
 
-Generate a complete proposal in plain text format (no markdown, no bullets unless specified, no styling like bold/italics) that exactly follows the structure and section order below. The output must be clean and ready for copy/paste into Word.
+NON-NEGOTIABLE RULES
+You MUST follow this format exactly. No deviation, no creativity, no alternative layouts.
+You MUST NOT omit any item provided by the user.
+You MUST NOT invent materials, quantities, or prices.
+You MUST NOT summarize or paraphrase input data.
+You MUST calculate all totals precisely.
+You MUST ensure all grouping is logical and consistent.
+Output must be ready to paste into a Word or Google Docs document.
+INPUT FORMAT YOU WILL RECEIVE
 
-Maintain a professional tone similar to an engineering consulting firm. Be specific, technical, and project-aware.
+You will be given a list of materials in any format, including:
 
-REQUIRED OUTPUT STRUCTURE (DO NOT CHANGE ORDER OR HEADINGS UNLESS SPECIFICALLY DIRECTED TO BY THIS PROMPT):
-Header Information
-Project Name and Address
-Date
-Client Name and Address
-RE: Line
-Opening Letter
-Address client formally
-Intro paragraph describing firm and purpose of proposal
-PROJECT UNDERSTANDING
-Describe site location
-Describe parcels / lot sizes
-Zoning and regulatory context
-Environmental constraints (wetlands, floodplain, etc.)
-Summary of discussions with officials (if applicable)
-Summary of client’s proposed project
+Material name
+Quantity
+Unit (if provided)
+Unit price (if provided)
 
-PROPOSED SCOPE OF WORK
+Example input:
 
-Break into phases exactly like below:
+Asphalt 2" - 500 tons - $85/ton
+Gravel Base - 1200 tons - $35/ton
+Pipe 12" PVC - 300 LF - $12/LF
+OUTPUT FORMAT (STRICT TEMPLATE)
+MATERIALS & COST REPORT
 
-Phase A: Existing Conditions
+1. ITEMIZED MATERIAL BREAKDOWN
 
-Numbered tasks (survey, GIS, mapping, deliverables)
+Each material MUST be grouped by type/category if similar (e.g., aggregates, piping, asphalt, concrete, miscellaneous).
 
-Phase B: Master Planning
+[Category Name]
 
-Numbered tasks (concept layout, client review, master plan, permitting path)
+Item: [Material Name]
 
-Phase C: Site Improvements
+Quantity: X [unit]
+Unit Price: $X.XX per [unit]
+Subtotal: $X.XX
 
-Numbered tasks (utilities, layout, plans, coordination)
+(Repeat for each item in category)
 
-Phase D: [Custom Phase Name Based on Project]
+Category Subtotal: $X.XX
 
-Numbered tasks specific to project (e.g., septic, stormwater, grading, etc.)
-SCHEDULE
-Timeline assumptions
-Duration for major deliverables
-Dependencies
-EXCLUSIONS
-Clearly list what is NOT included
+2. CATEGORY TOTALS
+[Category Name 1]: $X.XX
+[Category Name 2]: $X.XX
+[Category Name 3]: $X.XX
 
-FEES
+3. GRAND TOTAL
+TOTAL PROJECT COST: $X.XX
+CALCULATION RULES
+Subtotal = Quantity × Unit Price
+Category Total = Sum of all subtotals in category
+Grand Total = Sum of all category totals
+Round currency to 2 decimal places
 
-Include:
+FORMATTING RULES
+Use consistent indentation
+Use bold only for headers and totals
+Do not include explanations
+Do not include commentary
+Do not add extra sections beyond this structure
+Maintain professional engineering / estimating tone
 
-“Consulting Fee Budget” header
-Each phase with cost
-TOTAL FEE
-TERMS AND CONDITIONS
-Reference standard terms (do NOT rewrite full legal text)
-CLOSING
-Signature block
-Name, title
+FINAL OUTPUT REQUIREMENT
+Your response must contain ONLY the completed report. No preface. No explanation. No notes
 
-WRITING RULES:
-Keep language concise and professional
-Use realistic engineering terminology
-Do not hallucinate unknown data — use placeholders like “[To Be Determined]” if needed
-Maintain consistency with provided inputs
-Keep formatting simple (plain text paragraphs + numbered lists only)
-
-GENERAL INFO
-Project Name: ${projectName}
-Project Address: ${projectAddress}
-Date: ${date}
-Client Name: ${clientName}
-Client Company: ${clientCompany}
-Client Address: ${clientAddress}
-Client Email: ${clientEmail}
-
-PROJECT DETAILS
-Project Type (Residential, Commercial, Campground, Subdivision, etc.): ${projectType}
-Project Description (what they want to build/do): ${projectDescription}
-Site Size (acres/sf): ${siteSize}
-Number of Lots / Units: ${numberLots}
-Existing Conditions Summary: ${ecSummary}
-Proposed Improvements: ${proposedImprovements}
-
-REGULATORY / SITE CONDITIONS
-Zoning District: ${zone}
-Required Permits: ${reqPermits}
-Known Constraints: ${constraints}
-Wetlands: ${wetlands}
-Floodplain: ${floodplain}
-Buffers: ${buffers}
-Other: ${otherReg}
-Discussions with Town/Officials (if any): ${townOfficials}
-
-SCOPE CUSTOMIZATION
-Include Survey? (Yes/No) ${incSurv}
-Include Master Planning? (Yes/No) ${incMast}
-Include Site Design? (Yes/No) ${incSite}
-Include Septic Design? (Yes/No) ${incSeptic}
-Include Stormwater Design? (Yes/No) ${incStorm}
-Include Permitting? (Yes/No) ${incPermit}
-
-FEES
-Phase A Fee: ${aFee}
-Phase B Fee: ${bFee}
-Phase C Fee: ${cFee}
-Phase D Fee: ${dFee}
-Retainer Amount: ${retAmount}
-
-SCHEDULE
-Estimated Start Timing: ${estStart}
-Existing Conditions Duration: ${ecDur}
-Master Plan Duration: ${masDur}
-Design Duration: ${desDur}
-
-EXCLUSIONS (CUSTOM)
-List any known exclusions
-${otherExclusions}
-
-SIGNATURE INFO
-Your Name: ${yourName}
-Your Title: ${yourTitle}
-Company Name: ${compName}
-
+${materialsQuants}
 `;
 
   try {
@@ -529,12 +269,13 @@ Company Name: ${compName}
       })
     });
 
-    if (!response.ok) throw new Error("Failed to generate proposal");
+    if (!response.ok) throw new Error("API request failed");
     const data = await response.json();
-    const aiReply = data.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I couldn't generate the proposal at this time.";
+    const aiReply = data.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I couldn't generate the proposal.";
 
     contentDiv.innerHTML = "";
     contentDiv.appendChild(renderProposal(aiReply));
+
     const copyBtn = document.getElementById("copyButton");
     copyBtn.style.display = "inline-block";
     copyBtn.onclick = () => navigator.clipboard.writeText(aiReply);
@@ -542,7 +283,7 @@ Company Name: ${compName}
   } catch(err) {
     console.error(err);
     document.getElementById("errorMsg").style.display = "block";
-    document.getElementById("errorMsg").textContent = "Error generating proposal. Please check your connection and API key.";
+    document.getElementById("errorMsg").textContent = "Error generating proposal. Please try again.";
   }
 });
 </script>
